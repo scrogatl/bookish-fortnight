@@ -21,3 +21,39 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         return func.HttpResponse(body=html_content, 
                                 headers={"Content-Type": "text/html"},
                                 status_code=200)
+
+@app.route(route="query/normal", methods=["GET"])
+def queryNormal(req: func.HttpRequest):
+    logging.info(f"processing /query/normal")
+    rv = {
+        "message": "Hello from Azure Function!",
+        "status": "success"
+    }
+    json_string = json.dumps(rv)
+
+    return func.HttpResponse(body=json_string,
+                                headers={'Content-Type': 'json'})
+
+@app.route(route="query/wait", methods=["GET"])
+def queryWait(req: func.HttpRequest):
+    logging.info(f"processing /query/wait")
+    rv = {
+        "message": "Hello from Azure Function!",
+        "status": "success"
+    }
+    json_string = json.dumps(rv)
+
+    return func.HttpResponse(body=json_string,
+                                headers={'Content-Type': 'json'})                                
+
+@app.route(route="query/missing_index", methods=["GET"])
+def queryMissing_index(req: func.HttpRequest):
+    logging.info(f"processing /query/missing_index")
+    rv = {
+        "message": "Hello from Azure Function!",
+        "status": "success"
+    }
+    json_string = json.dumps(rv)
+
+    return func.HttpResponse(body=json_string,
+                                headers={'Content-Type': 'json'})        
