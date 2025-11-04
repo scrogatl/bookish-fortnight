@@ -4,3 +4,4 @@
 
 azure-functions
 pyodbc==5.2.0
+newrelic
