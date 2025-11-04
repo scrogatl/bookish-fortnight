@@ -20,7 +20,7 @@ MSSQL_SA_PASSWORD = os.environ.get('MSSQL_SA_PASSWORD', 'b1gCh33s3$$%!')
 def get_db_connection():
     """Establishes a connection to the SQL Server database."""
     connection_string = (
-        f'DRIVER={{ODBC Driver 17 for SQL Server}};'
+        f'DRIVER={{ODBC Driver 18 for SQL Server}};'
         f'SERVER={DB_SERVER};'
         f'DATABASE={DB_DATABASE};'
         f'UID={DB_USERNAME};'
