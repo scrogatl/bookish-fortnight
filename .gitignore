@@ -49,7 +49,6 @@ __azurite_db*__.json
 
 
 .vscode
-sqlcmd
-sqlcmd_debug
+sqlcmd*
 .terraform*
 terraform.tfstate*
