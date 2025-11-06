@@ -53,3 +53,5 @@ sqlcmd*
 main.tf*
 .terraform*
 terraform.tfstate*
+main.tf
+main.tfplan
