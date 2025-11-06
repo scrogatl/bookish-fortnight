@@ -49,3 +49,7 @@ __azurite_db*__.json
 
 
 .vscode
+sqlcmd
+sqlcmd_debug
+.terraform
+terraform.tfstate*
