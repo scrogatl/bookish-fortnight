@@ -12,18 +12,20 @@ MSSQL Application Stack on Azure Function and Azure SQL
 
 This terraform code borrows from the Azure Functions Quickstart examples: https://learn.microsoft.com/en-us/azure/azure-functions/functions-get-started?pivots=programming-language-python
 
-Edit the `main.tf` file to include your IP address (range) and change the DB password:
+Copy `terraform.tvars.example` to `terraform.tvars` and edit to reflect your env:
 ```
-locals {
-  admin_password = "complex_password_here_!23" # Replace with a strong password"
-}
+# The admin password for the VM (SSH) and SQL Managed Instance.
+# MUST be complex (e.g., "P@ssw0rd12345!")
+admin_password   = "YourComplexSQLPassword123!"
 
-resource "azurerm_mssql_firewall_rule" "example" {
-  name             = "allow-my-ip-address"
-  server_id        = azurerm_mssql_server.server.id
-  start_ip_address = "104.28.241.110" # Your specific starting public IP address
-  end_ip_address   = "104.28.241.150" # Your specific ending public IP address (can be the same as start for a single IP)
-}
+# Your local public IP address. Find it by searching "what is my ip" in Google.
+# This is required to secure access to the VM.
+my_ip_address_start = ""
+my_ip_address_end   = ""
+
+# Details for New Relic instrumentation
+new_relic_license_key        = "YOUR_INGEST_LICENSE_KEY"
+new_relic_app_name           = "YOUR_APP_NAME"
 ```
 
 Get Azure credentials: 
@@ -33,7 +35,6 @@ export ARM_SUBSCRIPTION_ID=$(az account show --query "id" --output tsv)
 
 Use terraform to create Azure Resource Group, Function App, and Azure SQL DB:
 ```
-cd terraform
 terraform init --upgrade 
 terraform plan -out main.tfplan -var="runtime_name=python" -var="runtime_version=3.12"
 ```
@@ -54,15 +55,14 @@ sa_name = "vvwzuybj"
 sql_server_name = "sql-helped-rhino"
 ```
 
-Add the stored proceduures:
+## Add the stored proceduures for the demo
+This will download `sqlcmd` for your platform and run the  `stored_procedures.ql` file aginst the DB
 ```
 ../scripts/configuresql.sh
 ```
 
-Return to root dir:
-```cd ..```
-
 ## Test locally
+From the project root:
 ```
 python -m venv .venv
 source .venv/bin/activate
@@ -73,7 +73,7 @@ func start
 
 You may (will) need to install an ODBC driver in your dev instance to connect to DB
 
-## publish function to Azure
+## Publish function to Azure
 
 ```
 func azure functionapp publish [sa_name]
