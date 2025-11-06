@@ -21,7 +21,8 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 DB_SERVER = os.environ.get('DB_SERVER', 'rg-lion.database.windows.net') # Use the service name from docker-compose
 DB_DATABASE = os.environ.get('DB_DATABASE', 'AdventureWorks')
 DB_USERNAME = os.environ.get('DB_USERNAME', 'azureadmin')
-MSSQL_SA_PASSWORD = os.environ.get('MSSQL_SA_PASSWORD', 'b1gCh33s3$$%!')
+MSSQL_SA_PASSWORD = os.environ.get('MSSQL_SA_PASSWORD', 'complex_password_here_!23')
+DB_SERVER = DB_SERVER+".database.windows.net"
 
 def get_db_connection():
     """Establishes a connection to the SQL Server database."""
