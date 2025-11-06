@@ -1,5 +1,10 @@
 # This Terraform configuration creates a Flex Consumption plan app in Azure Functions 
 # with the required Storage account and Blob Storage deployment container.
+# It also creates an Azure SQL db with firewall rules to allow your IP 
+# and azure services to access.
+#
+# Also adds the required env vars for New Relic APM 
+#
 
 # Create a random pet to generate a unique resource group name
 resource "random_pet" "rg_name" {
@@ -81,10 +86,12 @@ resource "azurerm_function_app_flex_consumption" "example" {
   instance_memory_in_mb       = 2048
   
   app_settings = {
-  "DB_SERVER"         = azurerm_mssql_server.server.name
-  "DB_DATABASE"       = "AdventureWorks"
-  "DB_USERNAME"       = "azureadmin"
-  "MSSQL_SA_PASSWORD" = local.admin_password
+  "DB_SERVER"             = azurerm_mssql_server.server.name
+  "DB_DATABASE"           = "AdventureWorks"
+  "DB_USERNAME"           = "azureadmin"
+  "MSSQL_SA_PASSWORD"     = var.admin_password
+  "NEW_RELIC_LICENSE_KEY" = var.new_relic_license_key
+  "NEW_RELIC_APP_NAME"    = var.new_relic_app_name
   }
  
  site_config {
@@ -101,14 +108,6 @@ resource "random_password" "admin_password" {
   min_special = 1
 }
 
-# locals {
-#   admin_password = try(random_password.admin_password[0].result, var.admin_password)
-# }
-
-locals {
-  admin_password = "complex_password_here_!23" # Replace with a strong password"
-}
-
 resource "random_pet" "azurerm_mssql_server_name" {
   prefix = "sql"
 }
@@ -118,7 +117,7 @@ resource "azurerm_mssql_server" "server" {
   resource_group_name          = azurerm_resource_group.example.name
   location                     = azurerm_resource_group.example.location
   administrator_login          = var.admin_username
-  administrator_login_password = local.admin_password
+  administrator_login_password = var.admin_password
   version                      = "12.0"
 }
 
@@ -137,8 +136,8 @@ resource "azurerm_mssql_database" "db" {
 resource "azurerm_mssql_firewall_rule" "example" {
   name             = "allow-my-ip-address"
   server_id        = azurerm_mssql_server.server.id
-  start_ip_address = "104.28.241.110" # Your specific starting public IP address
-  end_ip_address   = "104.28.241.120" # Your specific ending public IP address (can be the same as start for a single IP)
+  start_ip_address = var.my_ip_address_start
+  end_ip_address   = var.my_ip_address_end
 }
 
 resource "azurerm_mssql_firewall_rule" "appServiceIP" {

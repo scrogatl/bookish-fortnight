@@ -23,6 +23,9 @@ while IFS= read -r line; do
     fi
 done <<< "$output"
 
+
+SQL_ADMIN_PASSWORD=$(terraform output -raw admin_password)
+
 # Download and install sqlcmd if not present in $SCRIPT_DIR
 SQLCMD_BASEURL="https://github.com/microsoft/go-sqlcmd/releases/download/"
 SQLCMD_VERSION="v1.8.2"

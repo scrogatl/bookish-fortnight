@@ -88,3 +88,36 @@ variable "admin_password" {
   sensitive   = true
   default     = null
 }
+
+variable "new_relic_license_key" {
+  description = "Your New Relic Ingest License Key."
+  type        = string
+  sensitive   = true
+}
+
+variable "new_relic_team_tag" {
+  description = "Value of 'nr.team' tag."
+  type        = string
+  default     = ""
+}
+
+variable "new_relic_environment_tag" {
+  description = "Value of 'environment' tag."
+  type        = string
+  default     = "staging"
+}
+
+variable "new_relic_app_name" {
+  description = "App Name in New Relic"
+  type        = string
+}
+
+variable "my_ip_address_start" {
+  description = "Your local public IP address to allow SSH and web access."
+  type        = string
+}
+
+variable "my_ip_address_end" {
+  description = "Your local public IP address to allow SSH and web access."
+  type        = string
+}

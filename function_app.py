@@ -8,7 +8,7 @@ import pyodbc
 
 newrelic.agent.initialize()
 app_name = os.environ.get(
-    "NEW_RELIC_APP_NAME", os.environ.get("WEBSITE_SITE_NAME", None)
+    "NEW_RELIC_APP_NAME", os.environ.get("NEW_RELIC_APP_NAME", None)
 )
 newrelic.agent.register_application(app_name)
 

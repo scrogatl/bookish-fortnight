@@ -23,6 +23,6 @@ output "sql_server_name" {
 }
 
 output "admin_password" {
-  sensitive = false
-  value     = local.admin_password
+  sensitive = true
+  value     = var.admin_password
 }
