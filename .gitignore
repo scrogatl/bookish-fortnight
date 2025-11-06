@@ -50,5 +50,6 @@ __azurite_db*__.json
 
 .vscode
 sqlcmd*
+main.tf*
 .terraform*
 terraform.tfstate*
