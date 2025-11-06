@@ -1,6 +1,13 @@
 MSSQL Application Stack on Azure Function and Azure SQL
 ====================================================
 
+## Requirements:
+
+* terraform
+* Azure cli "az"
+* Azure tools "func"
+
+
 ## Create Azure Resource Group and Function App with Terraform
 
 This terraform code borrows from the Azure Functions Quickstart examples: https://learn.microsoft.com/en-us/azure/azure-functions/functions-get-started?pivots=programming-language-python
@@ -29,6 +36,10 @@ Use terraform to create Azure Resource Group, Function App, and Azure SQL DB:
 cd terraform
 terraform init --upgrade 
 terraform plan -out main.tfplan -var="runtime_name=python" -var="runtime_version=3.12"
+```
+
+Verify the output and when ready apply the changes: 
+```
 terraform apply main.tfplan
 ```
 
@@ -48,28 +59,10 @@ Add the stored proceduures:
 ../scripts/configuresql.sh
 ```
 
-## Run function
-
-To run the function locally export the env vars:
+## publish function to Azure
 
 **NOTE: the New Relic agent will not work when running locally!!**
 ```
 cd ..
-export DB_SERVER=$(terraform output  -raw sql_server_name)    
-export MSSQL_SA_PASSWORD=$(terraform output  -raw admin_password)
-func start
+func azure functionapp publish [sa_name]
 ```
-
-This project deploys a complete, observable web application and database environment into Microsoft Azure. The purpose is to create a realistic, cost-effective environment for demonstrating full-stack observability with New Relic.
-
-The stack runs on a single Azure Virtual Machine. It consists of:
-
-1.  **Docker Containers:**
-    -   A **Python Flask application** serving the web UI and query endpoints.
-    -   A **Microsoft SQL Server 2022** container that automatically restores the AdventureWorks database.
-2.  **VM Services:**
-    -   The **New Relic Infrastructure agent** installed as a service on the host VM, providing host and container monitoring.
-
-The Flask application is instrumented with the New Relic APM agent, providing a complete, observable stack from the front end to the database, all running on one VM.
-
-Architecture
