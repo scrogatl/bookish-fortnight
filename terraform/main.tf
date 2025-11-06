@@ -138,5 +138,12 @@ resource "azurerm_mssql_firewall_rule" "example" {
   name             = "allow-my-ip-address"
   server_id        = azurerm_mssql_server.server.id
   start_ip_address = "104.28.241.110" # Your specific starting public IP address
-  end_ip_address   = "104.28.241.150" # Your specific ending public IP address (can be the same as start for a single IP)
+  end_ip_address   = "104.28.241.120" # Your specific ending public IP address (can be the same as start for a single IP)
+}
+
+resource "azurerm_mssql_firewall_rule" "appServiceIP" {
+  name                = "AllowAccessFromAzure"
+  server_id           = azurerm_mssql_server.server.id
+  start_ip_address    = "0.0.0.0"
+  end_ip_address      = "0.0.0.0"
 }
