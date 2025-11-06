@@ -59,10 +59,22 @@ Add the stored proceduures:
 ../scripts/configuresql.sh
 ```
 
+Return to root dir:
+```cd ..```
+
+## Test locally
+```
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+func start
+```
+
+You may (will) need to install an ODBC driver in your dev instance to connect to DB
+
 ## publish function to Azure
 
-**NOTE: the New Relic agent will not work when running locally!!**
 ```
-cd ..
 func azure functionapp publish [sa_name]
 ```
