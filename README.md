@@ -1,5 +1,12 @@
-MSSQL Application Stack on Azure Function and Azure SQL
+MSSQL Application on Azure Functions and Azure SQL
 ====================================================
+
+This project deploys a complete, observable web application and database environment into Microsoft Azure. The purpose is to create a realistic, cost-effective environment for demonstrating full-stack observability with New Relic.
+
+This example runs on Azure Functions and Azure SQL. 
+
+TODO: Add a static web site to serve the content rather than the Azure Function.
+
 
 ## Requirements:
 
@@ -8,7 +15,8 @@ MSSQL Application Stack on Azure Function and Azure SQL
 * Azure tools "func"
 
 
-## Create Azure Resource Group and Function App with Terraform
+----------
+### Create Azure Resource Group and Function App with Terraform
 
 This terraform code borrows from the Azure Functions Quickstart examples: https://learn.microsoft.com/en-us/azure/azure-functions/functions-get-started?pivots=programming-language-python
 
@@ -54,14 +62,15 @@ resource_group_name = "rg-crisp-ostrich"
 sa_name = "vvwzuybj"
 sql_server_name = "sql-helped-rhino"
 ```
+----
 
-## Add the stored proceduures for the demo
+### Add the stored proceduures for the demo
 This will download `sqlcmd` for your platform and run the  `stored_procedures.ql` file aginst the DB
 ```
 ../scripts/configuresql.sh
 ```
-
-## Test locally
+----
+### Test locally
 From the project root:
 ```
 python -m venv .venv
